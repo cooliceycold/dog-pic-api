@@ -4,7 +4,8 @@ function get_data($file) {
     return $lines[array_rand($lines)];
 }
 
-function generate_url($data, $prefix, $suffix) {
+function generate_url($data, $prefixes, $suffix) {
+    $prefix = $prefixes[array_rand($prefixes)];
     return $prefix . $data . $suffix;
 }
 
@@ -13,17 +14,31 @@ $user_agent = $_SERVER['HTTP_USER_AGENT'];
 if (strpos($user_agent, 'Mobile')) {
     $device = 'mobile';
     $file = 'pe.txt';
-    $prefix = 'https://testingcf.jsdelivr.net/gh/e5autogreen/slbzd/s/S (';
+    $prefixes = [
+        'https://doglink.cf/gh/e5autogreen/slbzd/s/S (',
+        'https://fastly.doglink.cf/gh/e5autogreen/slbzd/s/S (',
+        'https://jscdn.doglink.cf/gh/e5autogreen/slbzd/s/S (',
+        'https://gcore.jsdelivr.net/gh/e5autogreen/slbzd/s/S (',
+        'https://testingcf.jsdelivr.net/gh/e5autogreen/slbzd/s/S (',
+        'https://gcore.doglink.cf/gh/e5autogreen/slbzd/s/S (',
+    ];
     $suffix = ').webp';
 } else {
     $device = 'pc';
     $file = 'pc.txt';
-    $prefix = 'https://testingcf.jsdelivr.net/gh/e5autogreen/slbzd/h/H (';
+    $prefixes = [
+        'https://doglink.cf/gh/e5autogreen/slbzd/h/H (',
+        'https://fastly.doglink.cf/gh/e5autogreen/slbzd/h/H (',
+        'https://jscdn.doglink.cf/gh/e5autogreen/slbzd/h/H (',
+        'https://gcore.jsdelivr.net/gh/e5autogreen/slbzd/h/H (',
+        'https://testingcf.jsdelivr.net/gh/e5autogreen/slbzd/h/H (',
+        'https://gcore.doglink.cf/gh/e5autogreen/slbzd/h/H (',
+    ];
     $suffix = ').webp';
 }
 
 $data = get_data($file);
-$url = generate_url($data, $prefix, $suffix);
+$url = generate_url($data, $prefixes, $suffix);
 
 header("Location: $url");
 ?>

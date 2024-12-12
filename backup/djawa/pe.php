@@ -9,35 +9,17 @@ function generate_url($data, $prefixes, $suffix) {
     return $prefix . $data . $suffix;
 }
 
-// 检测设备类型
-$user_agent = $_SERVER['HTTP_USER_AGENT'];
-if (strpos($user_agent, 'Mobile')) {
-    $device = 'mobile';
-    $file = 'pe.txt';
-    $prefixes = [
+$file = 'pc.txt'; // 你的txt文件名
+$data = get_data($file);
+$prefixes = [
         'https://doglink.cf/gh/e5autogreen/DJAWA/s/DJAWAs (',
         'https://fastly.doglink.cf/gh/e5autogreen/DJAWA/s/DJAWAs (',
         'https://jscdn.doglink.cf/gh/e5autogreen/DJAWA/s/DJAWAs (',
         'https://gcore.jsdelivr.net/gh/e5autogreen/DJAWA/s/DJAWAs (',
         'https://testingcf.jsdelivr.net/gh/e5autogreen/DJAWA/s/DJAWAs (',
         'https://gcore.doglink.cf/gh/e5autogreen/DJAWA/s/DJAWAs (',
-    ];
-    $suffix = ').webp';
-} else {
-    $device = 'pc';
-    $file = 'pc.txt';
-    $prefixes = [
-        'https://doglink.cf/gh/e5autogreen/DJAWA/h/DJAWAh (',
-        'https://fastly.doglink.cf/gh/e5autogreen/DJAWA/h/DJAWAh (',
-        'https://jscdn.doglink.cf/gh/e5autogreen/DJAWA/h/DJAWAh (',
-        'https://gcore.jsdelivr.net/gh/e5autogreen/DJAWA/h/DJAWAh (',
-        'https://testingcf.jsdelivr.net/gh/e5autogreen/DJAWA/h/DJAWAh (',
-        'https://gcore.doglink.cf/gh/e5autogreen/DJAWA/h/DJAWAh (',
-    ];
-    $suffix = ').webp';
-}
-
-$data = get_data($file);
+];
+$suffix = ').webp'; // 你的后缀
 $url = generate_url($data, $prefixes, $suffix);
 
 header("Location: $url");

@@ -4,12 +4,23 @@ function get_data($file) {
     return $lines[array_rand($lines)];
 }
 
-$file = 'pe.txt'; 
-$data = get_data($file);
+function generate_url($data, $prefixes, $suffix) {
+    $prefix = $prefixes[array_rand($prefixes)];
+    return $prefix . $data . $suffix;
+}
 
-$prefix = 'https://doglink.cf/gh/e5autogreen/yt/s/1 ('; // 前缀
-$suffix = ').webp'; // 后缀
-$url = $prefix . $data . $suffix;
+$file = 'pe.txt'; // 你的txt文件名
+$data = get_data($file);
+$prefixes = [
+        'https://doglink.cf/gh/e5autogreen/yt/s/1 (',
+        'https://fastly.doglink.cf/gh/e5autogreen/yt/s/1 (',
+        'https://jscdn.doglink.cf/gh/e5autogreen/yt/s/1 (',
+        'https://gcore.jsdelivr.net/gh/e5autogreen/yt/s/1 (',
+        'https://testingcf.jsdelivr.net/gh/e5autogreen/yt/s/1 (',
+        'https://gcore.doglink.cf/gh/e5autogreen/yt/s/1 (',
+    ];
+ $suffix = ').webp';
+$url = generate_url($data, $prefixes, $suffix);
 
 header("Location: $url");
 ?>

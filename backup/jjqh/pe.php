@@ -12,14 +12,14 @@ function generate_url($data, $prefixes, $suffix) {
 $file = 'pe.txt'; // 你的txt文件名
 $data = get_data($file);
 $prefixes = [
-        'https://doglink.cf/gh/cooliceycold/slct/',
-        'https://fastly.doglink.cf/gh/cooliceycold/slct/',
-        'https://jscdn.doglink.cf/gh/cooliceycold/slct/',
-        'https://gcore.jsdelivr.net/gh/cooliceycold/slct/',
-        'https://testingcf.jsdelivr.net/gh/cooliceycold/slct/',
-        'https://gcore.doglink.cf/gh/cooliceycold/slct/',
+        'https://doglink.cf/gh/e5autogreen/jjqh/s/jjqhs (',
+        'https://fastly.doglink.cf/gh/e5autogreen/jjqh/s/jjqhs (',
+        'https://jscdn.doglink.cf/gh/e5autogreen/jjqh/s/jjqhs (',
+        'https://gcore.jsdelivr.net/gh/e5autogreen/jjqh/s/jjqhs (',
+        'https://testingcf.jsdelivr.net/gh/e5autogreen/jjqh/s/jjqhs (',
+        'https://gcore.doglink.cf/gh/e5autogreen/jjqh/s/jjqhs (',
     ];
-$suffix = ')-tuya.webp';
+$suffix = ').webp';
 $url = generate_url($data, $prefixes, $suffix);
 
 header("Location: $url");

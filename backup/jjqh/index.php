@@ -1,26 +1,44 @@
 <?php
-// 定义PC和移动端的txt文件路径
-$pcFile = 'pc.txt';
-$mobileFile = 'pe.txt';
-
-// 检测用户设备类型
-function isMobile() {
-    return preg_match('/(android|iphone|ipad|ipod|mobile)/i', $_SERVER['HTTP_USER_AGENT']);
-}
-
-// 从txt文件中随机获取一个URL
-function getRandomUrl($file) {
-    $lines = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+function get_data($file) {
+    $lines = file($file, FILE_IGNORE_NEW_LINES);
     return $lines[array_rand($lines)];
 }
 
-// 根据设备类型选择txt文件
-$file = isMobile() ? $mobileFile : $pcFile;
+function generate_url($data, $prefixes, $suffix) {
+    $prefix = $prefixes[array_rand($prefixes)];
+    return $prefix . $data . $suffix;
+}
 
-// 获取随机URL
-$url = getRandomUrl($file);
+// 检测设备类型
+$user_agent = $_SERVER['HTTP_USER_AGENT'];
+if (strpos($user_agent, 'Mobile')) {
+    $device = 'mobile';
+    $file = 'pe.txt';
+    $prefixes = [
+        'https://doglink.cf/gh/e5autogreen/jjqh/s/jjqhs (',
+        'https://fastly.doglink.cf/gh/e5autogreen/jjqh/s/jjqhs (',
+        'https://jscdn.doglink.cf/gh/e5autogreen/jjqh/s/jjqhs (',
+        'https://gcore.jsdelivr.net/gh/e5autogreen/jjqh/s/jjqhs (',
+        'https://testingcf.jsdelivr.net/gh/e5autogreen/jjqh/s/jjqhs (',
+        'https://gcore.doglink.cf/gh/e5autogreen/jjqh/s/jjqhs (',
+    ];
+    $suffix = ').webp';
+} else {
+    $device = 'pc';
+    $file = 'pc.txt';
+    $prefixes = [
+        'https://doglink.cf/gh/e5autogreen/jjqh/h/jjqhh (',
+        'https://fastly.doglink.cf/gh/e5autogreen/jjqh/h/jjqhh (',
+        'https://jscdn.doglink.cf/gh/e5autogreen/jjqh/h/jjqhh (',
+        'https://gcore.jsdelivr.net/gh/e5autogreen/jjqh/h/jjqhh (',
+        'https://testingcf.jsdelivr.net/gh/e5autogreen/jjqh/h/jjqhh (',
+        'https://gcore.doglink.cf/gh/e5autogreen/jjqh/h/jjqhh (',
+    ];
+    $suffix = ').webp';
+}
 
-// 重定向到随机URL
+$data = get_data($file);
+$url = generate_url($data, $prefixes, $suffix);
+
 header("Location: $url");
-exit();
 ?>

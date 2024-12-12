@@ -9,24 +9,9 @@ function generate_url($data, $prefixes, $suffix) {
     return $prefix . $data . $suffix;
 }
 
-// 检测设备类型
-$user_agent = $_SERVER['HTTP_USER_AGENT'];
-if (strpos($user_agent, 'Mobile')) {
-    $device = 'mobile';
-    $file = 'pe.txt';
-    $prefixes = [
-        'https://doglink.cf/gh/e5autogreen/snzx/s/S (',
-        'https://fastly.doglink.cf/gh/e5autogreen/snzx/s/S (',
-        'https://jscdn.doglink.cf/gh/e5autogreen/snzx/s/S (',
-        'https://gcore.jsdelivr.net/gh/e5autogreen/snzx/s/S (',
-        'https://testingcf.jsdelivr.net/gh/e5autogreen/snzx/s/S (',
-        'https://gcore.doglink.cf/gh/e5autogreen/snzx/s/S (',
-    ];
-    $suffix = ').webp';
-} else {
-    $device = 'pc';
-    $file = 'pc.txt';
-    $prefixes = [
+$file = 'pc.txt'; // 你的txt文件名
+$data = get_data($file);
+$prefixes = [
         'https://doglink.cf/gh/e5autogreen/snzx/h/H (',
         'https://fastly.doglink.cf/gh/e5autogreen/snzx/h/H (',
         'https://jscdn.doglink.cf/gh/e5autogreen/snzx/h/H (',
@@ -34,10 +19,7 @@ if (strpos($user_agent, 'Mobile')) {
         'https://testingcf.jsdelivr.net/gh/e5autogreen/snzx/h/H (',
         'https://gcore.doglink.cf/gh/e5autogreen/snzx/h/H (',
     ];
-    $suffix = ').webp';
-}
-
-$data = get_data($file);
+$suffix = ').webp';
 $url = generate_url($data, $prefixes, $suffix);
 
 header("Location: $url");

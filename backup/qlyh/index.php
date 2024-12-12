@@ -1,30 +1,44 @@
 <?php
-//如何用php判断用户通过电脑端还是手机端访问网站
-function isMobile(){
-$useragent=isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : ”;
-$useragent_commentsblock=preg_match('|\(.*?\)|',$useragent,$matches)>0?$matches[0]:”;
-function CheckSubstrs($substrs,$text){
-foreach($substrs as $substr)
-if(false!==strpos($text,$substr)){
-return true;
+function get_data($file) {
+    $lines = file($file, FILE_IGNORE_NEW_LINES);
+    return $lines[array_rand($lines)];
 }
-return false;
+
+function generate_url($data, $prefixes, $suffix) {
+    $prefix = $prefixes[array_rand($prefixes)];
+    return $prefix . $data . $suffix;
 }
-$mobile_os_list=array('Google Wireless Transcoder','Windows CE','WindowsCE','Symbian','Android','armv6l','armv5','Mobile','CentOS','mowser','AvantGo','Opera Mobi','J2ME/MIDP','Smartphone','Go.Web','Palm','iPAQ');
-$mobile_token_list=array('Profile/MIDP','Configuration/CLDC-','160×160','176×220','240×240','240×320','320×240','UP.Browser','UP.Link','SymbianOS','PalmOS','PocketPC','SonyEricsson','Nokia','BlackBerry','Vodafone','BenQ','Novarra-Vision','Iris','NetFront','HTC_','Xda_','SAMSUNG-SGH','Wapaka','DoCoMo','iPhone','iPod');
-$found_mobile=CheckSubstrs($mobile_os_list,$useragent_commentsblock) ||
-CheckSubstrs($mobile_token_list,$useragent);
-if ($found_mobile){
-return true;
-}else{
-return false;
+
+// 检测设备类型
+$user_agent = $_SERVER['HTTP_USER_AGENT'];
+if (strpos($user_agent, 'Mobile')) {
+    $device = 'mobile';
+    $file = 'pe.txt';
+    $prefixes = [
+        'https://doglink.cf/gh/cooliceycold/qlyh/webp/s/',
+        'https://fastly.doglink.cf/gh/cooliceycold/qlyh/webp/s/',
+        'https://jscdn.doglink.cf/gh/cooliceycold/qlyh/webp/s/',
+        'https://gcore.jsdelivr.net/gh/cooliceycold/qlyh/webp/s/',
+        'https://testingcf.jsdelivr.net/gh/cooliceycold/qlyh/webp/s/',
+        'https://gcore.doglink.cf/gh/cooliceycold/qlyh/webp/s/',
+    ];
+    $suffix = ')-tuya.webp';
+} else {
+    $device = 'pc';
+    $file = 'pc.txt';
+    $prefixes = [
+        'https://doglink.cf/gh/cooliceycold/qlyh/webp/h/',
+        'https://fastly.doglink.cf/gh/cooliceycold/qlyh/webp/h/',
+        'https://jscdn.doglink.cf/gh/cooliceycold/qlyh/webp/h/',
+        'https://gcore.jsdelivr.net/gh/cooliceycold/qlyh/webp/h/',
+        'https://testingcf.jsdelivr.net/gh/cooliceycold/qlyh/webp/h/',
+        'https://gcore.doglink.cf/gh/cooliceycold/qlyh/webp/h/',
+    ];
+    $suffix = ')-tuya.webp';
 }
-}
-$pc = 'pc.php';
-$pe = 'pe.php';
-if (isMobile()){
-header("Location:".$pe);
-}else{
-header("Location:".$pc);
-}
+
+$data = get_data($file);
+$url = generate_url($data, $prefixes, $suffix);
+
+header("Location: $url");
 ?>
